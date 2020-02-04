@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  php-fpm:
+    build:
+      context: ./php-fpm
+    volumes:
+    - ./app:/app
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+    - ./app:/app
+    - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+  redis:
+    image: redis:latest
+  mysql:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=laravel
+      - MYSQL_DATABASE=laravel
+      - MYSQL_USER=laravel
+      - MYSQL_PASSWORD=laravel
