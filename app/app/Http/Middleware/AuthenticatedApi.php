@@ -9,15 +9,21 @@ use Illuminate\Support\Facades\Auth;
 class AuthenticatedApi
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
-     * @return mixed
+     * @param $request
+     * @param Closure $next
+     * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
+        $header = $request->header('Authorization', '');
+        $header = explode('Bearer ', $header);
+        $token = $header[1] ?? null;
+
+        if ($token === null) {
+            $controller = new Controller();
+            return $controller->responseError('Authentication (Bearer token) is required.', 401);
+        }
+
         if (Auth::guard('api')->check() === false) {
             $controller = new Controller();
             return $controller->responseError('Authentication error.', 401);
