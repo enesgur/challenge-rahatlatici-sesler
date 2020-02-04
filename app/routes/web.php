@@ -11,6 +11,7 @@
 |
 */
 
+// Show 404 page for home page
 Route::get('/', function () {
-    return view('welcome');
+    abort(404);
 });
