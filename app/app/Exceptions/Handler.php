@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\Api\Controller;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -50,6 +51,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        $controller = new Controller();
+        return $controller->responseError(
+            $exception->getMessage(),
+            null,
+            $controller::ERROR_CODE_GENERAL_ERROR,
+            400);
     }
 }

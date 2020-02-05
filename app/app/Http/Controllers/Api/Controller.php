@@ -17,6 +17,7 @@ class Controller extends BaseController
     const ERROR_CODE_BEARER_TOKEN_REQUIRED = 104;
     const ERROR_CODE_AUTHENTICATION = 105;
     const ERROR_CODE_DB_ERROR = 106;
+    const ERROR_CODE_GENERAL_ERROR = 107;
 
     /**
      * @param array|string $data response content
