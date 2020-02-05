@@ -54,7 +54,11 @@ class VersionController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->responseError($validator->errors(), 400);
+            return $this->responseError(
+                'Validation error',
+                $validator->errors(),
+                self::ERROR_CODE_VALIDATION,
+                400);
         }
 
         $appVersion = $request->post('appVersion'); // App version

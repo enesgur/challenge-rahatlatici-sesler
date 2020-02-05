@@ -22,7 +22,11 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->responseError($validator->errors(), 400);
+            return $this->responseError(
+                'Validation error',
+                $validator->errors(),
+                self::ERROR_CODE_VALIDATION,
+                400);
         }
 
         // Authentication Attempt
@@ -33,7 +37,11 @@ class UserController extends Controller
 
         // Login control
         if ($attempt === false) {
-            return $this->responseError('The username or password is wrong.', 400);
+            return $this->responseError(
+                'The username or password is wrong',
+                null,
+                self::ERROR_CODE_VALIDATION,
+                400);
         }
 
         // Token generate and save.

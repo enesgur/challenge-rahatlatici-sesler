@@ -21,12 +21,20 @@ class AuthenticatedApi
 
         if ($token === null) {
             $controller = new Controller();
-            return $controller->responseError('Authentication (Bearer token) is required.', 401);
+            return $controller->responseError(
+                'Authentication (Bearer token) is required',
+                null,
+                $controller::ERROR_CODE_BEARER_TOKEN_REQUIRED,
+                401);
         }
 
         if (Auth::guard('api')->check() === false) {
             $controller = new Controller();
-            return $controller->responseError('Authentication error.', 401);
+            return $controller->responseError(
+                'Authentication error',
+                null,
+                $controller::ERROR_CODE_AUTHENTICATION,
+                401);
         }
 
         return $next($request);
