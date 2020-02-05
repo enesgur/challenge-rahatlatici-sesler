@@ -21,3 +21,16 @@ Route::prefix('/user')->group(function () {
         Route::get('logout', 'UserController@logout');
     });
 });
+
+Route::middleware('auth.api')->group(function () {
+    Route::prefix('/category')->group(function () {
+        Route::get('list', 'CategoryController@list');
+        Route::get('songs/{id}', 'CategoryController@songs')->where('id', '[0-9]+');
+    });
+
+    Route::prefix('/favorites')->group(function () {
+        Route::get('songs', 'FavoriteController@songs');
+        Route::post('add', 'FavoriteController@add');
+        Route::delete('remove/{id}', 'FavoriteController@remove')->where('id', '[0-9]+');
+    });
+});
