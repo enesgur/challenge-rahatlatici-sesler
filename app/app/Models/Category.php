@@ -34,7 +34,7 @@ class Category extends Model
         $data = self::query()->from((new self)->getTable(), 'ct')
             ->leftJoin((new CategorySong)->getTable() . ' AS cts', 'ct.id', '=', 'cts.cid')
             ->groupBy('ct.id')
-            ->get(['ct.*', DB::raw('count(cts.id) as ctsCount')])->toArray();
+            ->get(['ct.*', DB::raw('count(cts.id) as songCount')])->toArray();
 
         Cache::put($cacheName, $data, (60 * 60));
         return $data;
